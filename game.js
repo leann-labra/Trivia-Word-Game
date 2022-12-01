@@ -17,6 +17,14 @@ var lettersInChosenWord = [];
 var blanksLetters = [];
 
 // Array of words the user will guess
+// var questions = [
+//    {
+//     question: "blah blah blah",
+//     word: "matrotrophy index"
+//    }
+
+// ];
+
 var words = [
     "matrotrophy index",
 ];
@@ -79,6 +87,8 @@ function startTimer() {
 // Creates blanks on screen
 function renderBlanks() {
   // Randomly picks word from words array
+//   wordUsed = questions.word;
+//   console.log(questions.word);
   chosenWord = words[Math.floor(Math.random() * words.length)];
   lettersInChosenWord = chosenWord.split("");
   numBlanks = lettersInChosenWord.length;
