@@ -1,8 +1,13 @@
 var wordBlank = document.querySelector(".word-blanks");
+var letterWrong = document.querySelector("wrong-letters");
 var win = document.querySelector(".win");
 var lose = document.querySelector(".lose");
 var timerElement = document.querySelector(".timer-count");
 var startButton = document.querySelector(".start-button");
+var questionsEl = document.querySelector(".question");
+
+var shuffledQuestions
+var questionIndex = 0
 
 var chosenWord = "";
 var numBlanks = 0;
@@ -16,18 +21,21 @@ var timerCount;
 var lettersInChosenWord = [];
 var blanksLetters = [];
 
+//assign array details for questions 
+var arrayShuffleQuestions
+var QuestionIndex = 0 
+
 // Array of words the user will guess
-// var questions = [
-//    {
-//     question: "blah blah blah",
-//     word: "matrotrophy index"
-//    }
-
-// ];
-
-var words = [
-    "matrotrophy index",
-];
+var questions = [
+   {
+    q: "blah blah blah",
+    word: "matrotrophy index"
+   },
+   {
+    q: "blah blah",
+    word: "next word"
+   }
+  ]
 
 // The init function is called when the page loads 
 function init() {
@@ -38,12 +46,20 @@ function init() {
 // The startGame function is called when the start button is clicked
 function startGame() {
   isWin = false;
-  timerCount = 30;
+  timerCount = 90;
   // Prevents start button from being clicked when round is in progress
   startButton.disabled = true;
+  arrayShuffleQuestions = questions.sort(() => Math.random() - 0.5);
+  setQuestion()
   renderBlanks()
   startTimer()
 }
+
+var setQuestion = function() {
+  displayQuestion(arrayShuffleQuestions[QuestionIndex])
+};
+
+
 
 // The winGame function is called when the win condition is met
 function winGame() {
@@ -52,6 +68,28 @@ function winGame() {
   startButton.disabled = false;
   setWins()
 }
+
+displayQuestion = function(index) {
+  questionsEl.innerText = index.q
+}
+
+// Creates blanks on screen
+renderBlanks = function(index) {
+  // Randomly picks word from words array
+  words = index.words;
+  chosenWord = words;
+  lettersInChosenWord = chosenWord.split("");
+  numBlanks = lettersInChosenWord.length;
+  blanksLetters = []
+  // Uses loop to push blanks to blankLetters array
+  for (var i = 0; i < numBlanks; i++) {
+    blanksLetters.push("_");
+  }
+  // Converts blankLetters array into a string and renders it on the screen
+  wordBlank.textContent = blanksLetters.join(" ");
+}
+
+
 
 // The loseGame function is called when timer reaches 0
 function loseGame() {
@@ -82,24 +120,7 @@ function startTimer() {
       loseGame();
     }
   }, 1000);
-}
-
-// Creates blanks on screen
-function renderBlanks() {
-  // Randomly picks word from words array
-//   wordUsed = questions.word;
-//   console.log(questions.word);
-  chosenWord = words[Math.floor(Math.random() * words.length)];
-  lettersInChosenWord = chosenWord.split("");
-  numBlanks = lettersInChosenWord.length;
-  blanksLetters = []
-  // Uses loop to push blanks to blankLetters array
-  for (var i = 0; i < numBlanks; i++) {
-    blanksLetters.push("_");
-  }
-  // Converts blankLetters array into a string and renders it on the screen
-  wordBlank.textContent = blanksLetters.join(" ")
-}
+};
 
 // Updates win count on screen and sets win count to client storage
 function setWins() {
@@ -187,16 +208,3 @@ startButton.addEventListener("click", startGame);
 // Calls init() so that it fires when page opened
 init();
 
-// Bonus: Add reset button
-var resetButton = document.querySelector(".reset-button");
-
-function resetGame() {
-  // Resets win and loss counts
-  winCounter = 0;
-  loseCounter = 0;
-  // Renders win and loss counts and sets them into client storage
-  setWins()
-  setLosses()
-}
-// Attaches event listener to button
-resetButton.addEventListener("click", resetGame);
