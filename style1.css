@@ -37,8 +37,7 @@
     padding: 20px 52px;
     text-align: center;
     transition-duration: 0.15s;
-    transition-property: all;
-    /* background-color: ; */
+    transition-property: background-color;
     transition-timing-function: linear;
     margin-top: 0.6em;
   }
@@ -50,18 +49,12 @@
     color: #fff;
     border-bottom:30px #879274;
   }
-
-  .play{
-    width: 60%;
-  }
-  .score-board {
-    width: 40%;
-  }
   
   main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    flex-direction: column;
   }
   
   section {
@@ -74,12 +67,14 @@
   
   .word-guess {
     /* width: 55vw; */
+    width: 100%;
     height: 400px;
   }
   
   .results {
     /* width: 30vw; */
-    height: 100%;
+    width: 100%;
+    height: 400px;
   }
   
   .card {
@@ -107,11 +102,10 @@
     background: #13293d;
     color: #fff;
     text-align: center;
-    width: 40%;
   }
   
   .timer-text {
-    padding: 25%;
+    padding: 55px;
   }
   
   @media screen and (max-width: 1183px) {
